@@ -5,6 +5,8 @@ const path = require("path");
 const cors = require("cors");
 
 const { getAllUsers } = require("./controllers/usersController");
+const { getAllTasks } = require("./model/tasksModel");
+const { getTasks } = require("./controllers/tasksController");
 
 function createFolder() {
   if (!fs.existsSync(path.join(__dirname, "../front/logs"))) {
@@ -35,5 +37,6 @@ function addLog(req) {
 router.use(cors());
 
 router.get("/users", getAllUsers);
+router.get("/tasks", getTasks);
 
 module.exports = router;
