@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 const fs = require("fs");
 const path = require("path");
-
-const axios = require("axios");
 const cors = require("cors");
+
+const { getAllUsers } = require("./controllers/usersController");
 
 function createFolder() {
   if (!fs.existsSync(path.join(__dirname, "../front/logs"))) {
@@ -26,18 +26,14 @@ function addLog(req) {
   });
 }
 
-router.use((req, res, next) => {
-  createFolder();
-  // addLog(req);
-  next();
-});
+// router.use((req, res, next) => {
+//   createFolder();
+//   // addLog(req);
+//   next();
+// });
 
 router.use(cors());
 
-router.get("/users", async (req, res) => {
-  const { data } = await axios.get("https://jsonplaceholder.typicode.com/users");
-
-  res.send(data);
-});
+router.get("/users", getAllUsers);
 
 module.exports = router;
