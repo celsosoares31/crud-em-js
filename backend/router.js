@@ -5,8 +5,8 @@ const path = require("path");
 const cors = require("cors");
 
 const { getAllUsers } = require("./controllers/usersController");
-const { getAllTasks } = require("./model/tasksModel");
-const { getTasks } = require("./controllers/tasksController");
+const { getTasks, addTasks, deleteTasks, updateTasks } = require("./controllers/tasksController");
+const { validatePostRequest, validatePutRequest } = require("./services/requestValidationService");
 
 function createFolder() {
   if (!fs.existsSync(path.join(__dirname, "../front/logs"))) {
@@ -28,15 +28,21 @@ function addLog(req) {
   });
 }
 
-// router.use((req, res, next) => {
-//   createFolder();
-//   // addLog(req);
-//   next();
-// });
+router.use((req, res, next) => {
+  if (req.method !== "GET" && req.method !== "POST" && req.method !== "PUT" && req.method !== "DELETE") {
+    return res.status(400).json({
+      message: "Invalid method",
+    });
+  }
+  next();
+});
 
 router.use(cors());
 
 router.get("/users", getAllUsers);
 router.get("/tasks", getTasks);
+router.post("/save", validatePostRequest, addTasks);
+router.delete("/delete/:id", deleteTasks);
+router.put("/update/:id", validatePutRequest, updateTasks);
 
 module.exports = router;
