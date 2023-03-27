@@ -4,9 +4,9 @@ const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
 
-const { getAllUsers } = require("./controllers/usersController");
-const { getTasks, addTasks, deleteTasks, updateTasks } = require("./controllers/tasksController");
-const { validatePostRequest, validatePutRequest } = require("./services/requestValidationService");
+const { getAllUsers } = require("./src/controllers/usersController");
+const { getTasks, addTasks, deleteTasks, updateTasks } = require("./src/controllers/tasksController");
+const { validatePostRequest, validatePutRequest } = require("./src/midlewares/requestValidationService");
 
 function createFolder() {
   if (!fs.existsSync(path.join(__dirname, "../front/logs"))) {

@@ -1,0 +1,50 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnPaste": false, // required
+  "editor.formatOnType": false, // required
+  "editor.formatOnSave": true, // optional
+  "editor.formatOnSaveMode": "file", // required to format on save
+  "files.autoSave": "onFocusChange", // optional but recommended
+  "editor.fontFamily": "fira code",
+  "editor.fontLigatures": true,
+
+  // Define o tema do VSCode
+  "workbench.colorTheme": "Dracula",
+
+  // Configura tamanho e família da fonte
+  "editor.fontSize": 15,
+  "editor.lineHeight": 22,
+
+  // Aplica linhas verticais para lembrar de quebrar linha em códigos muito grandes
+  // "editor.rulers": [150, 150],
+
+  // Aplica um sinal visual na esquerda da linha selecionada
+  "editor.renderLineHighlight": "gutter",
+
+  // Aumenta a fonte do terminal
+  "terminal.integrated.fontSize": 14,
+
+  "terminal.integrated.tabs.defaultColor": "terminal.ansiBlack",
+
+  // Define o tema dos ícones na sidebar
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.startupEditor": "newUntitledFile",
+
+  "editor.tabSize": 1,
+  "window.zoomLevel": 1,
+  "extensions.ignoreRecommendations": false,
+  "emmet.syntaxProfiles": {
+    "javascript": "jsx",
+    "nunjucks": "html"
+  },
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact",
+    "nunjucks": "html"
+  },
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "breadcrumbs.enabled": true,
+  "git.enableSmartCommit": true,
+  "editor.parameterHints.enabled": false,
+  "typescript.updateImportsOnFileMove.enabled": "never",
+  "terminal.integrated.tabStopWidth": 10
+}
