@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const fs = require("fs");
 const path = require("path");
-const cors = require("cors");
 
 const { getAllUsers } = require("./src/controllers/usersController");
 const { getTasks, addTasks, deleteTasks, updateTasks } = require("./src/controllers/tasksController");
@@ -36,8 +35,6 @@ router.use((req, res, next) => {
   }
   next();
 });
-
-router.use(cors());
 
 router.get("/users", getAllUsers);
 router.get("/tasks", getTasks);
