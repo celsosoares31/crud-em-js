@@ -27,8 +27,6 @@ const sendData = async (title) => {
 
 const updateTask = async (task, id) => {
   const { title, status } = task;
-
-  console.log(title, status);
   try {
     await fetch(`${baseURL}update/${id}`, {
       method: 'PUT',
@@ -42,4 +40,14 @@ const updateTask = async (task, id) => {
     console.log(error);
   }
 };
-export { fetchData, sendData, updateTask };
+
+const deleteTasks = async (id) => {
+  try {
+    await fetch(`${baseURL}delete/${id}`, {
+      method: 'DELETE',
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+export { fetchData, sendData, updateTask, deleteTasks };

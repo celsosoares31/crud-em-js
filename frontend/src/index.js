@@ -1,4 +1,4 @@
-import { fetchData, sendData, updateTask } from './controller/tasksController.js';
+import { deleteTasks, fetchData, sendData, updateTask } from './controller/tasksController.js';
 import '../src/style.css';
 
 const tasks = document.querySelector('#tasks');
@@ -26,8 +26,8 @@ const taskRender = (task) => {
     </select>
     </td>
     <td>
-      <button class="btn-tabela edit"><span class="material-symbols-outlined"> edit </span></button>
-      <button class="btn-tabela delete"><span class="material-symbols-outlined"> delete </span></button>
+      <button class="btn-tabela edit" id="edit${id}"><span class="material-symbols-outlined"> edit </span></button>
+      <button class="btn-tabela delete" id="delete${id}"><span class="material-symbols-outlined"> delete </span></button>
     </td>
   </tr>
   `;
@@ -43,9 +43,11 @@ const loadTasks = async () => {
   form.addEventListener('submit', addTask);
 
   const select = document.querySelectorAll('select');
-  const btn = document.querySelectorAll('.edit');
+  const btnEdit = document.querySelectorAll('.edit');
+  const btnDelete = document.querySelectorAll('.delete');
   select.forEach((select) => select.addEventListener('change', statusUpdate));
-  btn.forEach((btn) => btn.addEventListener('click', updateTitle));
+  btnEdit.forEach((btn) => btn.addEventListener('click', updateTitle));
+  btnDelete.forEach((btn) => btn.addEventListener('click', deleteTask));
 };
 
 loadTasks();
@@ -113,5 +115,20 @@ const updateTitle = async (e) => {
       }
     }
     loadTasks();
+  }
+};
+
+const deleteTask = async (e) => {
+  e.preventDefault();
+  const target = e.target;
+  if (target.classList.contains('delete')) {
+    const idStr = target.getAttribute('id');
+    const id = idStr.slice(6);
+    try {
+      await deleteTasks(id);
+      loadTasks();
+    } catch (error) {
+      console.error(error);
+    }
   }
 };
