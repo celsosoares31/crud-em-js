@@ -17,12 +17,12 @@ function validatePutRequest(req, res, next) {
   if (req.method === "PUT") {
     if (req.body.status === undefined) {
       return res.status(400).json({
-        message: "Status is required",
+        message: "status is required",
       });
     }
     if (req.body.status === "") {
       return res.status(400).json({
-        message: "Status cannot be empty",
+        message: "status cannot be empty",
       });
     }
   }

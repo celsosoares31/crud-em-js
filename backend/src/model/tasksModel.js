@@ -34,16 +34,37 @@ const deleteTask = async (id) => {
 };
 
 const updateTask = async (id, task) => {
-  const { status } = task;
+  const { title, status } = task;
+  if (title && status) {
+    const query = "UPDATE tasks SET title=?, status =? WHERE id =?";
+    const [updateTask] = await connection.execute(query, [title, status, id]);
 
-  const query = "UPDATE tasks SET status =? WHERE id =?";
-  const [updateTask] = await connection.execute(query, [status, id]);
+    if (updateTask) {
+      console.log("Tarefa atualizada com sucesso");
+    }
 
-  if (updateTask) {
-    console.log("Tarefa atualizada com sucesso");
+    return updateTask;
+  } else if (status && !title) {
+    console.log("titulo invalido");
+    const query = "UPDATE tasks SET status=? WHERE id =?";
+    const [updateTask] = await connection.execute(query, [status, id]);
+
+    if (updateTask) {
+      console.log("Status atualizado com sucesso");
+    }
+
+    return updateTask;
+  } else if (!status && title) {
+    console.log("status invalido");
+    const query = "UPDATE tasks SET title=? WHERE id =?";
+    const [updateTask] = await connection.execute(query, [title, id]);
+
+    if (updateTask) {
+      console.log("titulo atualizado com sucesso");
+    }
+
+    return updateTask;
   }
-
-  return updateTask;
 };
 
 function dateGenerator() {

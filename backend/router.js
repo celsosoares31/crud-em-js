@@ -33,6 +33,7 @@ router.use((req, res, next) => {
       message: "Invalid method",
     });
   }
+
   next();
 });
 

@@ -1,29 +1,45 @@
+const baseURL = 'http://localhost:3333/';
+
 const fetchData = async () => {
-  const data = await fetch("http://localhost:5000/tasks");
-  const resp = await data.json();
-  return resp;
+  try {
+    const data = await fetch(`${baseURL}tasks`);
+    const resp = await data.json();
+
+    return resp;
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const sendData = async (title) => {
-  await fetch("http://localhost:5000/save", {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify({
-      title,
-    }),
-  });
+  try {
+    await fetch(`${baseURL}save`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'Content-Security-Policy': ' default-src *' },
+      body: JSON.stringify({
+        title,
+      }),
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const updateTask = async (task, id) => {
   const { title, status } = task;
 
-  await fetch(`http://localhost:5000/update/${id}`, {
-    method: "PUT",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify({
-      title,
-      status,
-    }),
-  });
+  console.log(title, status);
+  try {
+    await fetch(`${baseURL}update/${id}`, {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        title,
+        status,
+      }),
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
-export { fetchData, sendData };
+export { fetchData, sendData, updateTask };
