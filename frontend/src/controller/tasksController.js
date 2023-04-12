@@ -4,10 +4,9 @@ const fetchData = async () => {
   try {
     const data = await fetch(`${baseURL}tasks`);
     const resp = await data.json();
-
     return resp;
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 };
 

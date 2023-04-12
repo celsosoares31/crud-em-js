@@ -1,14 +1,15 @@
 import { deleteTasks, fetchData, sendData, updateTask } from './controller/tasksController.js';
 import '../src/style.css';
+import msgModel from './model/MsgModel.js';
 
 const tasks = document.querySelector('#tasks');
+const thead = document.querySelector('thead');
 const inputTask = document.querySelector('.add-task');
 const form = document.querySelector('form');
 const statusArr = new Array('em andamento', 'pendente', 'concluido');
 
 const taskRender = (task) => {
   const tr = document.createElement('tr');
-
   const { id, title, created_at, status } = task;
 
   tr.innerHTML = `
@@ -35,32 +36,39 @@ const taskRender = (task) => {
 };
 
 const loadTasks = async () => {
-  tasks.innerHTML = '';
-  const data = await fetchData();
-  data.forEach((task) => {
-    taskRender(task);
-  });
-  form.addEventListener('submit', addTask);
+  try {
+    const data = await fetchData();
 
-  const select = document.querySelectorAll('select');
-  const btnEdit = document.querySelectorAll('.edit');
-  const btnDelete = document.querySelectorAll('.delete');
-  select.forEach((select) => select.addEventListener('change', statusUpdate));
-  btnEdit.forEach((btn) => btn.addEventListener('click', updateTitle));
-  btnDelete.forEach((btn) => btn.addEventListener('click', deleteTask));
+    tasks.innerHTML = '';
+
+    data.forEach((task) => {
+      taskRender(task);
+    });
+
+    form.addEventListener('submit', addTask);
+    const select = document.querySelectorAll('select');
+    const btnEdit = document.querySelectorAll('.edit');
+    const btnDelete = document.querySelectorAll('.delete');
+    select.forEach((select) => select.addEventListener('change', statusUpdate));
+    btnEdit.forEach((btn) => btn.addEventListener('click', updateTitle));
+    btnDelete.forEach((btn) => btn.addEventListener('click', deleteTask));
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 loadTasks();
 
 const addTask = async (e) => {
-  e.preventDefault();
   const title = inputTask.value;
-
+  e.preventDefault();
   if (title !== undefined) {
     await sendData(title);
     inputTask.value = '';
+    inputTask.focus();
 
     loadTasks();
+    msgModel('Dados Adicionado com sucesso!');
   }
 };
 
@@ -81,8 +89,6 @@ const updateTitle = async (e) => {
   const target = e.originalTarget;
   const value = titleColumn.outerText;
   const input = `<input class="edit-title" value="${value}"/>`;
-
-  console.log(target, '               yes');
 
   if (target.classList.contains('btn-tabela') && !target.classList.contains('editar')) {
     titleColumn.innerHTML = input;
@@ -115,6 +121,7 @@ const updateTitle = async (e) => {
       }
     }
     loadTasks();
+    msgModel('Dados actualizados com sucesso...');
   }
 };
 
@@ -126,7 +133,9 @@ const deleteTask = async (e) => {
     const id = idStr.slice(6);
     try {
       await deleteTasks(id);
+
       loadTasks();
+      msgModel('Dados deletados com sucesso!', true);
     } catch (error) {
       console.error(error);
     }

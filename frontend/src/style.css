@@ -1,9 +1,9 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto");
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 * {
   margin: 0;
   padding: 0;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 body {
   background-color: #fff;
@@ -86,7 +86,7 @@ input.edit-title {
   height: 45px;
   outline: none;
   border: none;
-  /* background-color: #f8f8f8; */
+  background-color: #f8f8f8;
   font-size: 1.2rem;
   padding-left: 20px;
 }
@@ -108,11 +108,7 @@ tbody button {
   border-radius: 5px;
   cursor: pointer;
 }
-tbody button i {
-  width: 50px;
-  height: 50px;
-  background-color: red;
-}
+
 tbody button:hover {
   transform: scale(1, 1.1);
 }
@@ -123,4 +119,22 @@ tbody button:nth-child(1) {
 
 tbody button:nth-child(2) {
   background-color: rgba(255, 0, 0, 0.8);
+}
+.msg {
+  display: block;
+  background-color: green;
+  color: #fff;
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  padding: 15px;
+  font-size: 1.2rem;
+  border: none !important;
+  border-radius: 15px;
+}
+.hide {
+  display: none;
+}
+.delete {
+  background-color: red;
 }
