@@ -119,4 +119,22 @@ tbody button:nth-child(1) {
 tbody button:nth-child(2) {
   background-color: rgba(255, 0, 0, 0.8);
 }
+.msg {
+  display: block;
+  background-color: green;
+  color: #fff;
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  padding: 15px;
+  font-size: 1.2rem;
+  border: none !important;
+  border-radius: 15px;
+}
+.hide {
+  display: none;
+}
+.delete {
+  background-color: red;
+}
 

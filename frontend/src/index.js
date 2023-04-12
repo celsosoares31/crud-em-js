@@ -1,11 +1,13 @@
 import { deleteTasks, fetchData, sendData, updateTask } from './controller/tasksController.js';
 import '../src/style.css';
 import msgModel from './model/MsgModel.js';
+import { modal } from './model/deleteConfirm.js';
 
 const tasks = document.querySelector('#tasks');
 const thead = document.querySelector('thead');
 const inputTask = document.querySelector('.add-task');
 const form = document.querySelector('form');
+const body = document.querySelector('body');
 const statusArr = new Array('em andamento', 'pendente', 'concluido');
 
 const taskRender = (task) => {
@@ -125,19 +127,43 @@ const updateTitle = async (e) => {
   }
 };
 
-const deleteTask = async (e) => {
+const deleteTask = (e) => {
   e.preventDefault();
   const target = e.target;
   if (target.classList.contains('delete')) {
     const idStr = target.getAttribute('id');
     const id = idStr.slice(6);
-    try {
-      await deleteTasks(id);
 
-      loadTasks();
-      msgModel('Dados deletados com sucesso!', true);
-    } catch (error) {
-      console.error(error);
-    }
+    const modalElem = modal();
+
+    const btns = document.querySelector('.modal-buttons');
+    const btn = btns.querySelectorAll('button');
+
+    btn.forEach((bt) =>
+      bt.addEventListener('click', async (e) => {
+        const target = e.target;
+
+        if (target.innerText == 'Cancel') {
+          body.removeChild(modalElem);
+          return;
+        }
+        try {
+          await deleteTasks(id);
+          loadTasks();
+          body.removeChild(modalElem);
+          msgModel('Dados deletados com sucesso!', true);
+        } catch (error) {
+          console.error(error);
+        }
+      })
+    );
   }
 };
+function deleteHandler(e) {
+  const target = e.target;
+
+  if ((target.innerText = 'Cancel')) {
+    return 0;
+  }
+  return 1;
+}

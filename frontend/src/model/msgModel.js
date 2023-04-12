@@ -1,26 +1,32 @@
-const _msgArea = document.createElement('div');
-const _body = document.querySelector('body');
-const _delay = 2000;
-_msgArea.classList.add('msg');
+const _msgArea = document.querySelector('#msg');
 
-const msgModel = (_txt = '', _type = false) => {
-  displayMsg(_type, _txt);
+const _delay = 2000;
+let _type;
+let _msg = '';
+
+const msgModel = (txt = '', type = false) => {
+  _type = type;
+  _msg = txt;
+  displayMsg();
 };
 
 function _removeMsg() {
-  _body.removeChild(_msgArea);
+  _msgArea.classList.remove('msg');
   _msgArea.classList.add('hide');
+  _msgArea.classList.remove('delete');
 }
 
-function displayMsg(_type, _txt) {
+function displayMsg() {
   if (_type) {
     _msgArea.classList.add('delete');
   }
-  _body.appendChild(_msgArea);
 
+  _msgArea.classList.add('msg');
   _msgArea.classList.remove('hide');
+
+  _msgArea.innerHTML = _msg;
+
   setTimeout(_removeMsg, _delay);
-  _msgArea.innerHTML = _txt;
 }
 
 export default msgModel;
